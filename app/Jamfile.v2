@@ -1,0 +1,19 @@
+
+project
+	:
+		requirements
+	;
+
+
+exe cpu
+	: # sources
+		cpu.cpp
+		..//MyHardware/<link>static
+	;
+
+install cpu-install
+	:
+		cpu
+	:
+		<location>$(DIST_BIN)
+	;

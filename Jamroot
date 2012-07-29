@@ -1,0 +1,32 @@
+import os ;
+
+project
+	:
+		requirements
+		<include>include
+		<include>src
+	:
+		usage-requirements
+		<include>include
+	:
+		build-dir $(BUILD)
+	;
+
+lib MyHardware
+	:
+		[ glob src/*.cpp ]
+	;
+
+install MyHardware-header
+	:
+		include/MyHardware.hpp
+	:
+		<location>$(DIST_HEADER)
+	;
+
+install MyHardware-lib
+	:
+		MyHardware
+	:
+		<location>$(DIST_LIB)
+	;

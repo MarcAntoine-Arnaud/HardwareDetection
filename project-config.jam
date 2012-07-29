@@ -1,0 +1,8 @@
+
+import os ;
+
+path-constant BUILD : .build ;
+path-constant DIST  : dist ;
+path-constant DIST_LIB : $(DIST)/lib ;
+path-constant DIST_BIN : $(DIST)/bin ;
+path-constant DIST_HEADER : $(DIST)/include ;
