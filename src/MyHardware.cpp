@@ -1,10 +1,14 @@
 
 #include <MyHardware.hpp>
+#if defined (_MSC_VER) || defined (__INTEL_COMPILER)
+#include <intrin.h>
+#endif
+
 
 static inline void cpuid( int functionnumber, unsigned long& a, unsigned long& b, unsigned long& c, unsigned long& d )
 {
 #if defined (_MSC_VER) || defined (__INTEL_COMPILER) // Microsoft or Intel compiler, intrin.h included
-	unsigned long output[4];
+        int output[4] = { -1 };
 	__cpuidex(output, functionnumber, 0); // intrinsic function for CPUID
 	a = output[0];
 	b = output[1];
@@ -30,7 +34,7 @@ static inline void cpuid( int functionnumber, unsigned long& a, unsigned long& b
 	d = output[3];
 #endif
 }
-#define cpuid(in, a, b, c, d) asm("cpuid": "=a" (a), "=b" (b), "=c" (c), "=d" (d) : "a" (in));
+//#define cpuid(in, a, b, c, d) asm("cpuid": "=a" (a), "=b" (b), "=c" (c), "=d" (d) : "a" (in));
 /*
 #define CPUID_VENDOR_AMD       "AuthenticAMD"
 #define CPUID_VENDOR_INTEL     "GenuineIntel"
@@ -88,7 +92,7 @@ Cpu::EVendor Cpu::getCpuVendor()
 bool Cpu::HasSimdMMX()
 {
 	cpuid( 1, eax, ebx, ecx, edx );
-	return ( edx & CPUID_FLAG_MMX );
+        return ( edx & CPUID_FLAG_MMX );
 }
 
 bool Cpu::HasSimdExtendedMMX()
